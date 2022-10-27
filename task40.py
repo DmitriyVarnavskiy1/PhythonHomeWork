@@ -7,42 +7,34 @@
 первым элементом первой строки второй матрицы и т.д. """
 
 class Matrix:
-    def __init__(self, list_of_lists):
-        self.mat = list_of_lists
+    def __init__(self, matrix):
+        self.our_matrix = matrix
 
     def __str__(self):
-        string = ''
-        for i in self.mat:
-            for j in i:
-                string = string + '%s\t' % (j)
-            string = string[:-1]
-            string = string + '\n'
-        string = string[:-1]
-        return string
+        for i in range(len(self.our_matrix)):
+            print(self.our_matrix[i])
+        return "Matrix with " + str(len(self.our_matrix)) + " rows, and " + str(len(self.our_matrix[0])) + " columns."
 
     def __add__(self, other):
-        result = []
-        numbers = []
-        for i in range(len(self.mat)):
-            for j in range(len(self.mat[0])):
-                summa = other.mat[i][j] + self.mat[i][j]
-                numbers.append(summa)
-                if len(numbers) == len(self.mat[0]):
-                    result.append(numbers)
-                    numbers = []
-        return Matrix(result)
+        new_matrix = []
+        buffer = []
+        if len(self.our_matrix) == len(other.our_matrix) and len(self.our_matrix[0]) == len(other.our_matrix[0]):
+            for i in range(len(self.our_matrix)):
+                for j in range(len(self.our_matrix[0])):
+                    buffer.append(int(self.our_matrix[i][j]) + int(other.our_matrix[i][j]))
+                new_matrix.append(buffer)
+                buffer = []
+            return Matrix(new_matrix)
+        else:
+            print("Matrix's must be with equal dimensions")
+            return 0
 
 
-a = [[3, 5, 32], [2, 4, 6], [-1, 64, -8]]
-b = [[2, 3, 3], [-2, 1, -6], [5, -3, 0]]
-m = Matrix(a)
-mm = Matrix(b)
+matrix = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+new_matrix = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
-print("\nМатрица №1")
-print(m.__str__(), "\n")
+print(matrix)
 
-print("Матрица №2")
-print(mm.__str__(), "\n")
+new_matrix = matrix + new_matrix
 
-print("Сумма матриц №1 и №2")
-print(m + mm)
+print(new_matrix)
